@@ -5,151 +5,80 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f5f2ed">
-<title>MORTEX Calculator</title>
-<style>
-:root{--bg:#f5f2ed;--card:#fff;--text:#222;--muted:#777;--line:#ddd;--accent:#222}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
-.wrap{max-width:520px;margin:auto;padding:18px 16px 40px}
-h1{font-size:28px;margin:8px 0 3px}.sub{color:var(--muted);margin-bottom:20px}
-.card{background:var(--card);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 2px 12px #0000000b}
-label{font-size:13px;font-weight:600;color:var(--muted);display:block;margin-bottom:7px}
-select,input{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:17px;background:white}
-.result{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #eee}
-.result:last-child{border-bottom:0}.pig{font-weight:600}.grams{font-size:22px;font-weight:700}
-.total{font-size:16px;color:var(--muted);margin-top:14px}.total b{color:var(--text);font-size:20px}
-button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;background:#222;color:#fff;margin:5px 5px 0 0}
-.small{font-size:12px;color:var(--muted);line-height:1.45}
-.search{margin-bottom:10px}
- 
-.colorCards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
-.colorCard{display:flex;align-items:center;gap:9px;border:1px solid #ddd;border-radius:12px;background:#fff;padding:9px;text-align:left;font-size:13px;min-height:48px}
-.colorCard.active{border:2px solid #222;padding:8px}
-.swatch{width:30px;height:30px;border-radius:8px;flex:0 0 30px;border:1px solid #0002;box-shadow:inset 0 0 0 1px #fff5}
-.colorText b{display:block;font-size:13px}.colorText span{color:#777;font-size:11px}
-@media(max-width:380px){.colorCards{grid-template-columns:1fr}}
-</style>
-
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MORTEX">
+<meta name="theme-color" content="#f3f0ea">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
+<title>MORTEX Color Calculator</title>
+<style>
+:root{--bg:#f3f0ea;--card:#fff;--ink:#242320;--muted:#77736d;--line:#dedbd5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:620px;margin:auto;padding:18px 14px 44px}.top{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}
+h1{font-size:28px;margin:0}.sub{font-size:13px;color:var(--muted);margin-top:4px}
+.search{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:#fff;font-size:16px;outline:none}
+.families{display:flex;gap:8px;overflow:auto;padding:12px 0 6px;scrollbar-width:none}.families button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 12px}.families button.active{background:#242320;color:#fff;border-color:#242320}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.tile{border:0;padding:0;background:#fff;border-radius:17px;overflow:hidden;text-align:left;box-shadow:0 2px 12px #0000000a}.swatch{height:108px;width:100%}.tilebody{padding:11px 12px}.code{font-weight:800;font-size:14px}.name{font-size:13px;color:#68645e;margin-top:3px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;padding:0}.modal.show{display:flex}.sheet{background:#fff;border-radius:24px 24px 0 0;width:min(620px,100%);max-height:88vh;overflow:auto;padding:18px 16px 28px}.handle{width:42px;height:5px;background:#d5d2cc;border-radius:5px;margin:0 auto 16px}.hero{display:flex;gap:14px;align-items:center}.hero .swatch{width:92px;height:92px;border-radius:16px;flex:0 0 92px}.hero h2{margin:0;font-size:24px}.hero p{margin:5px 0;color:var(--muted)}.close{float:right;border:0;background:#eee;border-radius:50%;width:34px;height:34px;font-size:18px}
+.card{background:#f7f5f1;border-radius:17px;padding:15px;margin-top:16px}label{font-size:12px;color:var(--muted);font-weight:700;display:block;margin-bottom:7px}input[type=number]{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;font-size:18px;background:#fff}.quick{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.quick button,.copy{border:0;background:#242320;color:#fff;border-radius:10px;padding:9px 12px}.row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e4e1dc}.row:last-child{border-bottom:0}.grams{font-weight:800}.note{font-size:11px;color:#777;margin-top:14px;line-height:1.45}
+@media(max-width:390px){.grid{gap:8px}.swatch{height:92px}}
+</style>
 </head>
 <body>
 <div class="wrap">
-<h1>MORTEX Calculator</h1>
-<div class="sub">Pigmentberekening per kg MORTEX COLOR 2-N</div>
-
-<div class="card">
-<label>ZOEK KLEUR</label>
-<input class="search" id="search" placeholder="BM-nummer of kleurnaam..." oninput="renderOptions()">
-<label>KLEUR</label>
-<div id="colorCards" class="colorCards"></div>
-<select id="color" aria-label="Kleur" style="display:none"></select>
-<label style="margin-top:14px">HOEVEELHEID MORTEX (kg)</label>
-<input id="kg" type="number" inputmode="decimal" value="1" min="0" step="0.1" oninput="calculate()">
-<div>
-<button onclick="setKg(1)">1 kg</button>
-<button onclick="setKg(2.5)">2,5 kg</button>
-<button onclick="setKg(5)">5 kg</button>
-<button onclick="setKg(10)">10 kg</button>
-</div>
+  <div class="top"><div><h1>MORTEX</h1><div class="sub">Color Card & Pigment Calculator</div></div></div>
+  <input id="search" class="search" placeholder="Zoek BM-nummer of kleur..." oninput="render()">
+  <div id="families" class="families"></div>
+  <div id="grid" class="grid"></div>
 </div>
 
-<div class="card">
-<div id="results"></div>
-<div class="total">Totaal pigment: <b id="total">0,00 g</b></div>
-</div>
-
-<div class="card small">
-<b>Let op</b><br>
-Dit is een rekenhulp op basis van de ingevoerde formules. Controleer de exacte formule altijd tegen de actuele BEAL technische documentatie voordat je een mengsel maakt.
-</div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <button class="close" onclick="closeModal()">×</button><div class="handle"></div>
+    <div id="detail"></div>
+  </div>
 </div>
 
 <script>
-const data = [
-["BM01","Natural",[["Geen",0]]],
-["BM02","White Light",[["Blanc Titane",22.5]]],
-["BM03","White Mid",[["Blanc Titane",56.25]]],
-["BM04","White Strong",[["Blanc Titane",90]]],
-["BM05","Caffe Latte Intense",[["Terra Ombra Cipro Nat. HG",42]]],
-["BM06","Caffe Latte Strong",[["Terra Ombra Cipro Nat. HG",18]]],
-["BM07","Caffe Latte Mid",[["Terra Ombra Cipro Nat. HG",6]]],
-["BM08","Caffe Latte Light",[["Terra Ombra Cipro Nat. HG",3]]],
-["BM09","Imperial Intense",[["BR Jaune",13.33]]],
-["BM10","Imperial Strong",[["BR Jaune",6.67]]],
-["BM11","Imperial Mid",[["BR Jaune",4]]],
-["BM12","Imperial Light",[["BR Jaune",1.33]]],
-["BM13","Brick Intense",[["BR Rouge",26.66]]],
-["BM14","Brick Strong",[["BR Rouge",13.34]]],
-["BM15","Brick Mid",[["BR Rouge",8]]],
-["BM16","Brick Light",[["BR Rouge",2.66]]],
-["BM17","Cacao Intense",[["T. Ombra Cipro Bruc. C",24]]],
-["BM18","Cacao Strong",[["T. Ombra Cipro Bruc. C",24]]],
-["BM19","Cacao Mid",[["T. Ombra Cipro Bruc. C",6]]],
-["BM20","Cacao Light",[["T. Ombra Cipro Bruc. C",3]]],
-["BM21","Sand Intense",[["T. Ombra Bruc. AEK",11.2],["Ocra Avana",14.4]]],
-["BM22","Sand Strong",[["T. Ombra Bruc. AEK",5.6],["Ocra Avana",7.2]]],
-["BM23","Sand Mid",[["T. Ombra Bruc. AEK",2.8],["Ocra Avana",3.6]]],
-["BM24","Sand Light",[["T. Ombra Bruc. AEK",1.4],["Ocra Avana",1.8]]],
-["BM25","Shitake Intense",[["T. Ombra Bruc. CCCN",24]]],
-["BM26","Shitake Strong",[["T. Ombra Bruc. CCCN",16]]],
-["BM27","Shitake Mid",[["T. Ombra Bruc. CCCN",8]]],
-["BM28","Shitake Light",[["T. Ombra Bruc. CCCN",4]]],
-["BM29","Camel Intense",[["Ocra Avana",135],["Ocre Jaune",42]]],
-["BM30","Camel Strong",[["Ocra Avana",31.5],["Ocre Jaune",7]]],
-["BM31","Camel Mid",[["Ocra Avana",9]]],
-["BM32","Camel Light",[["Ocra Avana",4.5]]],
-["BM33","Cuberdon Intense",[["Oxyde Rouge Vandyck",32]]],
-["BM34","Cuberdon Strong",[["Oxyde Rouge Vandyck",16]]],
-["BM35","Cuberdon Mid",[["Oxyde Rouge Vandyck",8]]],
-["BM36","Cuberdon Light",[["Oxyde Rouge Vandyck",4]]],
-["BM37","Vesuvio Intense",[["Rosso Ercolano",100],["Oxyde Rouge Venitien",8]]],
-["BM38","Vesuvio Strong",[["Rosso Ercolano",50],["Oxyde Rouge Venitien",4]]],
-["BM39","Vesuvio Mid",[["Rosso Ercolano",25],["Oxyde Rouge Venitien",2]]],
-["BM40","Vesuvio Light",[["Rosso Ercolano",12],["Oxyde Rouge Venitien",0.8]]],
-["BM41","Olive Intense",[["Vert Olive",36]]],
-["BM42","Olive Strong",[["Vert Olive",18]]],
-["BM43","Olive Mid",[["Vert Olive",9]]],
-["BM44","Olive Light",[["Vert Olive",4.5]]],
-["BM49","Welsh Intense",[["Vert Oxyde de Chrome",27],["Noir",11]]],
-["BM50","Welsh Strong",[["Vert Oxyde de Chrome",27],["Noir",3.66]]],
-["BM51","Welsh Mid",[["Vert Oxyde de Chrome",18]]],
-["BM52","Welsh Light",[["Vert Oxyde de Chrome",9]]]
-];
-const swatches={"BM01": "#aaa59a", "BM02": "#f0efec", "BM03": "#edece6", "BM04": "#ebe9e2", "BM05": "#b99b78", "BM06": "#c6af94", "BM07": "#d2c1ac", "BM08": "#ded3c6", "BM09": "#c7a34f", "BM10": "#d1b574", "BM11": "#dac595", "BM12": "#e4d6b6", "BM13": "#9c5540", "BM14": "#b07868", "BM15": "#c1988c", "BM16": "#d3b8b0", "BM17": "#765544", "BM18": "#92786b", "BM19": "#ab988e", "BM20": "#c5b8b2", "BM21": "#c8ad83", "BM22": "#d2bd9c", "BM23": "#dbcbb3", "BM24": "#e4daca", "BM25": "#8e8170", "BM26": "#a59b8d", "BM27": "#b9b2a8", "BM28": "#cec9c2", "BM29": "#b88952", "BM30": "#c5a176", "BM31": "#d2b696", "BM32": "#deccb7", "BM33": "#6e3942", "BM34": "#8c6269", "BM35": "#a7888d", "BM36": "#c2aeb1", "BM37": "#a84e35", "BM38": "#b9735f", "BM39": "#c89486", "BM40": "#d8b6ac", "BM41": "#777451", "BM42": "#939075", "BM43": "#acaa96", "BM44": "#c5c4b7", "BM49": "#66745f", "BM50": "#859080", "BM51": "#a2aa9e", "BM52": "#bfc4bc"};
-const color=document.getElementById("color"), search=document.getElementById("search"), kg=document.getElementById("kg");
-function renderOptions(){
- const q=search.value.toLowerCase();
- const old=color.value;
- color.innerHTML="";
- const matches=data.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q));
- matches.forEach(x=>{
-   const o=document.createElement("option"); o.value=x[0]; o.textContent=x[0]+" — "+x[1]; color.appendChild(o);
- });
- if([...color.options].some(o=>o.value===old)) color.value=old;
- else if(color.options.length) color.value=color.options[0].value;
- document.getElementById("colorCards").innerHTML=matches.map(x=>
-   `<button type="button" class="colorCard ${x[0]===color.value?'active':''}" onclick="chooseColor('${x[0]}')">
-    <span class="swatch" style="background:${swatches[x[0]]}"></span>
-    <span class="colorText"><b>${x[0]}</b><span>${x[1]}</span></span>
-   </button>`).join("");
- calculate();
+const colors = [{"code": "BM01", "name": "Natural", "pigments": [{"name": "—", "perKg": 0}], "color": "#d7d0c3"}, {"code": "BM02", "name": "White Light", "pigments": [{"name": "BR Blanc Titane", "perKg": 22.5}], "color": "#e4e0d5"}, {"code": "BM03", "name": "White Mid", "pigments": [{"name": "BR Blanc Titane", "perKg": 56.25}], "color": "#efede6"}, {"code": "BM04", "name": "White Strong", "pigments": [{"name": "BR Blanc Titane", "perKg": 90.0}], "color": "#faf9f5"}, {"code": "BM05", "name": "Caffe Latte Intense", "pigments": [{"name": "T. Ombra Cipro Nat. HG", "perKg": 42}], "color": "#98775a"}, {"code": "BM06", "name": "Caffe Latte Strong", "pigments": [{"name": "T. Ombra Cipro Nat. HG", "perKg": 18}], "color": "#b08f6f"}, {"code": "BM07", "name": "Caffe Latte Mid", "pigments": [{"name": "T. Ombra Cipro Nat. HG", "perKg": 6}], "color": "#c6a889"}, {"code": "BM08", "name": "Caffe Latte Light", "pigments": [{"name": "T. Ombra Cipro Nat. HG", "perKg": 3}], "color": "#d8c2a8"}, {"code": "BM09", "name": "Imperial Intense", "pigments": [{"name": "BR Jaune", "perKg": 13.33}], "color": "#a98b42"}, {"code": "BM10", "name": "Imperial Strong", "pigments": [{"name": "BR Jaune", "perKg": 6.67}], "color": "#c1a45c"}, {"code": "BM11", "name": "Imperial Mid", "pigments": [{"name": "BR Jaune", "perKg": 4}], "color": "#d1b878"}, {"code": "BM12", "name": "Imperial Light", "pigments": [{"name": "BR Jaune", "perKg": 1.33}], "color": "#ded09d"}, {"code": "BM13", "name": "Brick Intense", "pigments": [{"name": "BR Rouge", "perKg": 26.66}], "color": "#884333"}, {"code": "BM14", "name": "Brick Strong", "pigments": [{"name": "BR Rouge", "perKg": 13.34}], "color": "#9e5745"}, {"code": "BM15", "name": "Brick Mid", "pigments": [{"name": "BR Rouge", "perKg": 8}], "color": "#b56e5b"}, {"code": "BM16", "name": "Brick Light", "pigments": [{"name": "BR Rouge", "perKg": 2.66}], "color": "#cf9580"}, {"code": "BM17", "name": "Cacao Intense", "pigments": [{"name": "T. OM. Cipro Bruc. C", "perKg": 24}], "color": "#624638"}, {"code": "BM18", "name": "Cacao Strong", "pigments": [{"name": "T. OM. Cipro Bruc. C", "perKg": 24}], "color": "#795949"}, {"code": "BM19", "name": "Cacao Mid", "pigments": [{"name": "T. OM. Cipro Bruc. C", "perKg": 6}], "color": "#987763"}, {"code": "BM20", "name": "Cacao Light", "pigments": [{"name": "T. OM. Cipro Bruc. C", "perKg": 3}], "color": "#b79a82"}, {"code": "BM21", "name": "Sand Intense", "pigments": [{"name": "T. Ombra Bruc. AEK", "perKg": 11.2}, {"name": "Ocra Avana", "perKg": 14.4}], "color": "#ad936d"}, {"code": "BM22", "name": "Sand Strong", "pigments": [{"name": "T. Ombra Bruc. AEK", "perKg": 5.6}, {"name": "Ocra Avana", "perKg": 7.2}], "color": "#c0a77f"}, {"code": "BM23", "name": "Sand Mid", "pigments": [{"name": "T. Ombra Bruc. AEK", "perKg": 2.8}, {"name": "Ocra Avana", "perKg": 3.6}], "color": "#cfb990"}, {"code": "BM24", "name": "Sand Light", "pigments": [{"name": "T. Ombra Bruc. AEK", "perKg": 1.4}, {"name": "Ocra Avana", "perKg": 1.8}], "color": "#ddc9a7"}, {"code": "BM25", "name": "Shitake Intense", "pigments": [{"name": "T. OM. Bruc. CCCN", "perKg": 24}], "color": "#766958"}, {"code": "BM26", "name": "Shitake Strong", "pigments": [{"name": "T. OM. Bruc. CCCN", "perKg": 16}], "color": "#897c6a"}, {"code": "BM27", "name": "Shitake Mid", "pigments": [{"name": "T. OM. Bruc. CCCN", "perKg": 8}], "color": "#a29381"}, {"code": "BM28", "name": "Shitake Light", "pigments": [{"name": "T. OM. Bruc. CCCN", "perKg": 4}], "color": "#bcb0a0"}, {"code": "BM29", "name": "Camel Intense", "pigments": [{"name": "Ocra Avana", "perKg": 135}, {"name": "Ocre Jaune", "perKg": 42}], "color": "#9f703f"}, {"code": "BM30", "name": "Camel Strong", "pigments": [{"name": "Ocra Avana", "perKg": 31.5}, {"name": "Ocre Jaune", "perKg": 7}], "color": "#b88852"}, {"code": "BM31", "name": "Camel Mid", "pigments": [{"name": "Ocra Avana", "perKg": 9}], "color": "#c99f6c"}, {"code": "BM32", "name": "Camel Light", "pigments": [{"name": "Ocra Avana", "perKg": 4.5}], "color": "#d8ba8c"}, {"code": "BM33", "name": "Cuberdon Intense", "pigments": [{"name": "Oxyde Rouge Vandyck", "perKg": 32}], "color": "#63353a"}, {"code": "BM34", "name": "Cuberdon Strong", "pigments": [{"name": "Oxyde Rouge Vandyck", "perKg": 16}], "color": "#7c474b"}, {"code": "BM35", "name": "Cuberdon Mid", "pigments": [{"name": "Oxyde Rouge Vandyck", "perKg": 8}], "color": "#995e62"}, {"code": "BM36", "name": "Cuberdon Light", "pigments": [{"name": "Oxyde Rouge Vandyck", "perKg": 4}], "color": "#b98283"}, {"code": "BM37", "name": "Vesuvio Intense", "pigments": [{"name": "Rosso Ercolano", "perKg": 100}, {"name": "Oxyde Rouge Venitien", "perKg": 8}], "color": "#8d3e2d"}, {"code": "BM38", "name": "Vesuvio Strong", "pigments": [{"name": "Rosso Ercolano", "perKg": 50}, {"name": "Oxyde Rouge Venitien", "perKg": 4}], "color": "#a65340"}, {"code": "BM39", "name": "Vesuvio Mid", "pigments": [{"name": "Rosso Ercolano", "perKg": 25}, {"name": "Oxyde Rouge Venitien", "perKg": 2}], "color": "#bd6b55"}, {"code": "BM40", "name": "Vesuvio Light", "pigments": [{"name": "Rosso Ercolano", "perKg": 12}, {"name": "Oxyde Rouge Venitien", "perKg": 0.8}], "color": "#d18a73"}, {"code": "BM41", "name": "Olive Intense", "pigments": [{"name": "Vert Olive", "perKg": 36}], "color": "#5f6145"}, {"code": "BM42", "name": "Olive Strong", "pigments": [{"name": "Vert Olive", "perKg": 18}], "color": "#747451"}, {"code": "BM43", "name": "Olive Mid", "pigments": [{"name": "Vert Olive", "perKg": 9}], "color": "#8d8d68"}, {"code": "BM44", "name": "Olive Light", "pigments": [{"name": "Vert Olive", "perKg": 4.5}], "color": "#a8a77e"}, {"code": "BM49", "name": "Welsh Intense", "pigments": [{"name": "BR Vert Oxyde de Chrome", "perKg": 27}, {"name": "BR Noir", "perKg": 11}], "color": "#56654f"}, {"code": "BM50", "name": "Welsh Strong", "pigments": [{"name": "BR Vert Oxyde de Chrome", "perKg": 27}, {"name": "BR Noir", "perKg": 3.66}], "color": "#6e7b61"}, {"code": "BM51", "name": "Welsh Mid", "pigments": [{"name": "BR Vert Oxyde de Chrome", "perKg": 18}], "color": "#87937a"}, {"code": "BM52", "name": "Welsh Light", "pigments": [{"name": "BR Vert Oxyde de Chrome", "perKg": 9}], "color": "#a4ad97"}, {"code": "BM53", "name": "Agua Intense", "pigments": [{"name": "Bleu Cemento", "perKg": 18}], "color": "#557887"}, {"code": "BM54", "name": "Agua Strong", "pigments": [{"name": "Bleu Cemento", "perKg": 9}], "color": "#7093a0"}, {"code": "BM55", "name": "Agua Mid", "pigments": [{"name": "Bleu Cemento", "perKg": 4.5}], "color": "#94b0b6"}, {"code": "BM56", "name": "Agua Light", "pigments": [{"name": "Bleu Cemento", "perKg": 0.9}], "color": "#c1d0cf"}, {"code": "BM57", "name": "Makala Intense", "pigments": [{"name": "BR Noir", "perKg": 36.66}], "color": "#3f4641"}, {"code": "BM58", "name": "Makala Strong", "pigments": [{"name": "BR Noir", "perKg": 18.34}], "color": "#5a605a"}, {"code": "BM59", "name": "Makala Mid", "pigments": [{"name": "BR Noir", "perKg": 11}], "color": "#747972"}, {"code": "BM60", "name": "Makala Light", "pigments": [{"name": "BR Noir", "perKg": 3.66}], "color": "#9da19a"}, {"code": "BM61", "name": "Oltra Marine Intense", "pigments": [{"name": "Bleu Outremer New 26", "perKg": 22.22}], "color": "#3d5b78"}, {"code": "BM62", "name": "Oltra Marine Strong", "pigments": [{"name": "Bleu Outremer New 26", "perKg": 16.66}], "color": "#58759a"}, {"code": "BM63", "name": "Oltra Marine Mid", "pigments": [{"name": "Bleu Outremer New 26", "perKg": 8.88}], "color": "#7893b0"}, {"code": "BM64", "name": "Oltra Marine Light", "pigments": [{"name": "Bleu Outremer New 26", "perKg": 4.44}], "color": "#a8bacb"}, {"code": "BM65", "name": "Pinctada Intense", "pigments": [{"name": "Nero Vite Germania", "perKg": 23.33}], "color": "#5b514a"}, {"code": "BM66", "name": "Pinctada Strong", "pigments": [{"name": "Nero Vite Germania", "perKg": 11.67}], "color": "#766b61"}, {"code": "BM67", "name": "Pinctada Mid", "pigments": [{"name": "Nero Vite Germania", "perKg": 7}], "color": "#95897c"}, {"code": "BM68", "name": "Pinctada Light", "pigments": [{"name": "Nero Vite Germania", "perKg": 2.33}], "color": "#b5aaa0"}, {"code": "BM2052", "name": "Vanille Intense", "pigments": [{"name": "BR Jaune 920", "perKg": 2.5}, {"name": "BR Blanc Titane", "perKg": 2.5}], "color": "#d8c99b"}, {"code": "BM2053", "name": "Vanille Strong", "pigments": [{"name": "BR Jaune 920", "perKg": 1.75}, {"name": "BR Blanc Titane", "perKg": 1.75}], "color": "#e1d4aa"}, {"code": "BM2054", "name": "Vanille Mid", "pigments": [{"name": "BR Jaune 920", "perKg": 1.0}, {"name": "BR Blanc Titane", "perKg": 1.0}], "color": "#e9ddb9"}, {"code": "BM2055", "name": "Vanille Light", "pigments": [{"name": "BR Jaune 920", "perKg": 0.5}, {"name": "BR Blanc Titane", "perKg": 0.5}], "color": "#f0e8d0"}, {"code": "BM2056", "name": "Terra Intense", "pigments": [{"name": "T. OM Cipro Br C", "perKg": 50}, {"name": "BR Jaune 920", "perKg": 7.5}, {"name": "BR Rouge 130", "perKg": 7.5}], "color": "#9d5e43"}, {"code": "BM2057", "name": "Terra Strong", "pigments": [{"name": "T. OM Cipro Br C", "perKg": 25}, {"name": "BR Jaune 920", "perKg": 3.7}, {"name": "BR Rouge 130", "perKg": 3.7}], "color": "#b1785c"}, {"code": "BM2058", "name": "Terra Mid", "pigments": [{"name": "T. OM Cipro Br C", "perKg": 12}, {"name": "BR Jaune 920", "perKg": 1.8}, {"name": "BR Rouge 130", "perKg": 1.8}], "color": "#c39174"}, {"code": "BM2059", "name": "Terra Light", "pigments": [{"name": "T. OM Cipro Br C", "perKg": 6}, {"name": "BR Jaune 920", "perKg": 0.9}, {"name": "BR Rouge 130", "perKg": 0.9}], "color": "#d9b29a"}, {"code": "BM2060", "name": "Mint Intense", "pigments": [{"name": "Verde Foresta", "perKg": 30}], "color": "#667f68"}, {"code": "BM2061", "name": "Mint Strong", "pigments": [{"name": "Verde Foresta", "perKg": 20}], "color": "#7f977e"}, {"code": "BM2062", "name": "Mint Mid", "pigments": [{"name": "Verde Foresta", "perKg": 10}], "color": "#9caf9a"}, {"code": "BM2063", "name": "Mint Light", "pigments": [{"name": "Verde Foresta", "perKg": 5}], "color": "#c0ccc0"}, {"code": "BM2064", "name": "Fox Intense", "pigments": [{"name": "Sienne Nat 1010", "perKg": 8}, {"name": "BR Jaune 920", "perKg": 8}, {"name": "Rosso Ca SC 3800", "perKg": 4}], "color": "#9a633d"}, {"code": "BM2065", "name": "Fox Strong", "pigments": [{"name": "Sienne Nat 1010", "perKg": 4}, {"name": "BR Jaune 920", "perKg": 4}, {"name": "Rosso Ca SC 3800", "perKg": 2}], "color": "#b47e55"}, {"code": "BM2066", "name": "Fox Mid", "pigments": [{"name": "Sienne Nat 1010", "perKg": 2}, {"name": "BR Jaune 920", "perKg": 2}, {"name": "Rosso Ca SC 3800", "perKg": 1}], "color": "#c99d74"}, {"code": "BM2067", "name": "Fox Light", "pigments": [{"name": "Sienne Nat 1010", "perKg": 1}, {"name": "BR Jaune 920", "perKg": 1}, {"name": "Rosso Ca SC 3800", "perKg": 0.5}], "color": "#dfc3a2"}];
+const families = ["Alle","White","Caffe Latte","Imperial","Brick","Cacao","Sand","Shitake","Camel","Cuberdon","Vesuvio","Olive","Welsh","Agua","Makala","Oltra Marine","Pinctada","Vanille","Terra","Mint","Fox"];
+let activeFamily="Alle", selected=null;
+const search=document.getElementById("search"), grid=document.getElementById("grid"), fams=document.getElementById("families");
+function familyOf(n){return families.slice(1).find(f=>n.toLowerCase().includes(f.toLowerCase()))||"Alle"}
+function renderFamilies(){
+ fams.innerHTML=families.map(f=>`<button class="${f===activeFamily?'active':''}" onclick="activeFamily='${f}';render()">${f}</button>`).join("");
 }
-function chooseColor(code){ color.value=code; renderOptions(); }
-function calculate(){
- const item=data.find(x=>x[0]===color.value); const amount=parseFloat(kg.value)||0;
- if(!item){document.getElementById("results").innerHTML="";return}
- let total=0;
- document.getElementById("results").innerHTML=item[2].map(p=>{
-   const g=p[1]*amount; total+=g;
-   return `<div class="result"><div class="pig">${p[0]}</div><div class="grams">${g.toFixed(2).replace(".",",")} g</div></div>`;
- }).join("");
- document.getElementById("total").textContent=total.toFixed(2).replace(".",",")+" g";
+function render(){
+ renderFamilies();
+ const q=search.value.toLowerCase().trim();
+ const list=colors.filter(c=>(activeFamily==="Alle"||familyOf(c.name)===activeFamily)&&(!q||(c.code+" "+c.name).toLowerCase().includes(q)));
+ grid.innerHTML=list.map(c=>`<button class="tile" onclick="openColor('${c.code}')"><div class="swatch" style="background:${c.color}"></div><div class="tilebody"><div class="code">${c.code}</div><div class="name">${c.name}</div></div></button>`).join("");
 }
-function setKg(v){kg.value=v;calculate()}
-color.addEventListener("change",calculate); renderOptions();
+function openColor(code){
+ selected=colors.find(c=>c.code===code);
+ const kg=1;
+ document.getElementById("detail").innerHTML=`
+ <div class="hero"><div class="swatch" style="background:${selected.color}"></div><div><h2>${selected.code}</h2><p>${selected.name}</p></div></div>
+ <div class="card"><label>HOEVEELHEID MORTEX COLOR 2-N (KG)</label><input id="kg" type="number" min="0" step="0.1" value="1" oninput="calc()"><div class="quick">
+   <button onclick="setKg(.5)">0,5 kg</button><button onclick="setKg(1)">1 kg</button><button onclick="setKg(2.5)">2,5 kg</button><button onclick="setKg(5)">5 kg</button><button onclick="setKg(10)">10 kg</button>
+ </div></div>
+ <div class="card"><div id="formula"></div><button class="copy" onclick="copyFormula()">Kopieer formule</button></div>
+ <div class="note">De kleurstaal is een visuele indicatie. BEAL vermeldt dat kleuren op de kaart kunnen afwijken van het uiteindelijke aangebrachte MORTEX-resultaat. Formules zijn in deze versie opgenomen uit de geraadpleegde MORTEX-formulelijst; controleer de actuele BEAL-documentatie voor gebruik.</div>`;
+ calc(); document.getElementById("modal").classList.add("show");
+}
+function calc(){
+ const kg=parseFloat(document.getElementById("kg")?.value)||0;
+ const total=selected.pigments.reduce((s,p)=>s+p.perKg*kg,0);
+ document.getElementById("formula").innerHTML=selected.pigments.map(p=>`<div class="row"><span>${p.name}</span><span class="grams">${(p.perKg*kg).toFixed(2).replace(".",",")} g</span></div>`).join("")+
+ `<div class="row"><strong>Totaal pigment</strong><strong class="grams">${total.toFixed(2).replace(".",",")} g</strong></div>`;
+}
+function setKg(v){document.getElementById("kg").value=v;calc()}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function copyFormula(){
+ const kg=parseFloat(document.getElementById("kg").value)||0;
+ const lines=selected.pigments.map(p=>`${p.name}: ${(p.perKg*kg).toFixed(2)} g`).join("\\n");
+ navigator.clipboard?.writeText(`${selected.code} ${selected.name} — ${kg} kg MORTEX\\n${lines}`);
+}
+if("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+render();
 </script>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script></body></html>
+</body></html>
