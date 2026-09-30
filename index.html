@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f5f2ed">
+<title>MORTEX Calculator</title>
+<style>
+:root{--bg:#f5f2ed;--card:#fff;--text:#222;--muted:#777;--line:#ddd;--accent:#222}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+.wrap{max-width:520px;margin:auto;padding:18px 16px 40px}
+h1{font-size:28px;margin:8px 0 3px}.sub{color:var(--muted);margin-bottom:20px}
+.card{background:var(--card);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 2px 12px #0000000b}
+label{font-size:13px;font-weight:600;color:var(--muted);display:block;margin-bottom:7px}
+select,input{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:17px;background:white}
+.result{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #eee}
+.result:last-child{border-bottom:0}.pig{font-weight:600}.grams{font-size:22px;font-weight:700}
+.total{font-size:16px;color:var(--muted);margin-top:14px}.total b{color:var(--text);font-size:20px}
+button{border:0;border-radius:12px;padding:12px 14px;font-size:15px;background:#222;color:#fff;margin:5px 5px 0 0}
+.small{font-size:12px;color:var(--muted);line-height:1.45}
+.search{margin-bottom:10px}
+</style>
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MORTEX">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+<div class="wrap">
+<h1>MORTEX Calculator</h1>
+<div class="sub">Pigmentberekening per kg MORTEX COLOR 2-N</div>
+
+<div class="card">
+<label>ZOEK KLEUR</label>
+<input class="search" id="search" placeholder="BM-nummer of kleurnaam..." oninput="renderOptions()">
+<label>KLEUR</label>
+<select id="color"></select>
+<label style="margin-top:14px">HOEVEELHEID MORTEX (kg)</label>
+<input id="kg" type="number" inputmode="decimal" value="1" min="0" step="0.1" oninput="calculate()">
+<div>
+<button onclick="setKg(1)">1 kg</button>
+<button onclick="setKg(2.5)">2,5 kg</button>
+<button onclick="setKg(5)">5 kg</button>
+<button onclick="setKg(10)">10 kg</button>
+</div>
+</div>
+
+<div class="card">
+<div id="results"></div>
+<div class="total">Totaal pigment: <b id="total">0,00 g</b></div>
+</div>
+
+<div class="card small">
+<b>Let op</b><br>
+Dit is een rekenhulp op basis van de ingevoerde formules. Controleer de exacte formule altijd tegen de actuele BEAL technische documentatie voordat je een mengsel maakt.
+</div>
+</div>
+
+<script>
+const data = [
+["BM01","Natural",[["Geen",0]]],
+["BM02","White Light",[["Blanc Titane",22.5]]],
+["BM03","White Mid",[["Blanc Titane",56.25]]],
+["BM04","White Strong",[["Blanc Titane",90]]],
+["BM05","Caffe Latte Intense",[["Terra Ombra Cipro Nat. HG",42]]],
+["BM06","Caffe Latte Strong",[["Terra Ombra Cipro Nat. HG",18]]],
+["BM07","Caffe Latte Mid",[["Terra Ombra Cipro Nat. HG",6]]],
+["BM08","Caffe Latte Light",[["Terra Ombra Cipro Nat. HG",3]]],
+["BM09","Imperial Intense",[["BR Jaune",13.33]]],
+["BM10","Imperial Strong",[["BR Jaune",6.67]]],
+["BM11","Imperial Mid",[["BR Jaune",4]]],
+["BM12","Imperial Light",[["BR Jaune",1.33]]],
+["BM13","Brick Intense",[["BR Rouge",26.66]]],
+["BM14","Brick Strong",[["BR Rouge",13.34]]],
+["BM15","Brick Mid",[["BR Rouge",8]]],
+["BM16","Brick Light",[["BR Rouge",2.66]]],
+["BM17","Cacao Intense",[["T. Ombra Cipro Bruc. C",24]]],
+["BM18","Cacao Strong",[["T. Ombra Cipro Bruc. C",24]]],
+["BM19","Cacao Mid",[["T. Ombra Cipro Bruc. C",6]]],
+["BM20","Cacao Light",[["T. Ombra Cipro Bruc. C",3]]],
+["BM21","Sand Intense",[["T. Ombra Bruc. AEK",11.2],["Ocra Avana",14.4]]],
+["BM22","Sand Strong",[["T. Ombra Bruc. AEK",5.6],["Ocra Avana",7.2]]],
+["BM23","Sand Mid",[["T. Ombra Bruc. AEK",2.8],["Ocra Avana",3.6]]],
+["BM24","Sand Light",[["T. Ombra Bruc. AEK",1.4],["Ocra Avana",1.8]]],
+["BM25","Shitake Intense",[["T. Ombra Bruc. CCCN",24]]],
+["BM26","Shitake Strong",[["T. Ombra Bruc. CCCN",16]]],
+["BM27","Shitake Mid",[["T. Ombra Bruc. CCCN",8]]],
+["BM28","Shitake Light",[["T. Ombra Bruc. CCCN",4]]],
+["BM29","Camel Intense",[["Ocra Avana",135],["Ocre Jaune",42]]],
+["BM30","Camel Strong",[["Ocra Avana",31.5],["Ocre Jaune",7]]],
+["BM31","Camel Mid",[["Ocra Avana",9]]],
+["BM32","Camel Light",[["Ocra Avana",4.5]]],
+["BM33","Cuberdon Intense",[["Oxyde Rouge Vandyck",32]]],
+["BM34","Cuberdon Strong",[["Oxyde Rouge Vandyck",16]]],
+["BM35","Cuberdon Mid",[["Oxyde Rouge Vandyck",8]]],
+["BM36","Cuberdon Light",[["Oxyde Rouge Vandyck",4]]],
+["BM37","Vesuvio Intense",[["Rosso Ercolano",100],["Oxyde Rouge Venitien",8]]],
+["BM38","Vesuvio Strong",[["Rosso Ercolano",50],["Oxyde Rouge Venitien",4]]],
+["BM39","Vesuvio Mid",[["Rosso Ercolano",25],["Oxyde Rouge Venitien",2]]],
+["BM40","Vesuvio Light",[["Rosso Ercolano",12],["Oxyde Rouge Venitien",0.8]]],
+["BM41","Olive Intense",[["Vert Olive",36]]],
+["BM42","Olive Strong",[["Vert Olive",18]]],
+["BM43","Olive Mid",[["Vert Olive",9]]],
+["BM44","Olive Light",[["Vert Olive",4.5]]],
+["BM49","Welsh Intense",[["Vert Oxyde de Chrome",27],["Noir",11]]],
+["BM50","Welsh Strong",[["Vert Oxyde de Chrome",27],["Noir",3.66]]],
+["BM51","Welsh Mid",[["Vert Oxyde de Chrome",18]]],
+["BM52","Welsh Light",[["Vert Oxyde de Chrome",9]]]
+];
+const color=document.getElementById("color"), search=document.getElementById("search"), kg=document.getElementById("kg");
+function renderOptions(){
+ const q=search.value.toLowerCase();
+ const old=color.value;
+ color.innerHTML="";
+ data.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q)).forEach((x,i)=>{
+   const o=document.createElement("option"); o.value=x[0]; o.textContent=x[0]+" — "+x[1]; color.appendChild(o);
+ });
+ if([...color.options].some(o=>o.value===old)) color.value=old;
+ calculate();
+}
+function calculate(){
+ const item=data.find(x=>x[0]===color.value); const amount=parseFloat(kg.value)||0;
+ if(!item){document.getElementById("results").innerHTML="";return}
+ let total=0;
+ document.getElementById("results").innerHTML=item[2].map(p=>{
+   const g=p[1]*amount; total+=g;
+   return `<div class="result"><div class="pig">${p[0]}</div><div class="grams">${g.toFixed(2).replace(".",",")} g</div></div>`;
+ }).join("");
+ document.getElementById("total").textContent=total.toFixed(2).replace(".",",")+" g";
+}
+function setKg(v){kg.value=v;calculate()}
+color.addEventListener("change",calculate); renderOptions();
+</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script></body></html>
